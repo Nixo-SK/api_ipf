@@ -1,18 +1,21 @@
+import sh
+import schedule
+import sys
+import time
+
 from os import remove, makedirs, devnull
 from os.path import exists
 from shutil import copyfile
 from datetime import datetime
 from zipfile import ZipFile
 from wget import download
+
 from django.db import connection
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
+
 from eszone_ipf.settings import BASE_DIR
 from api_ipf.settings import *
-import sh
-import schedule
-import sys
-import time
 
 
 class JSONResponse(HttpResponse):
@@ -29,10 +32,9 @@ def file_content(path):
     """
     A function that reads the file and returns its content.
 
-    In case the file is opened a read correctly,function returns affirmative
-    response 200 OK.
-    In case the file is deleted by external impact and remains in the database,
-    function returns error 404 NOT FOUND.
+    In case the file is opened a read correctly, function returns affirmative
+    response 200 OK. In case the file is deleted by external impact and 
+    remains in the database function returns error 404 NOT FOUND.
 
     :param path: path to file
     :return: JSON response
@@ -50,8 +52,8 @@ def config_delete(config, path):
     """
     A function that deletes a specific configuration object.
 
-    In case the deletion was done returned is affirmative response 201 CREATED.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the deletion was done, returns affirmative response 201 CREATED.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param config: specific config object
     :param path: path to file
@@ -69,8 +71,8 @@ def log_delete(log, path):
     """
     A function that deletes a specific log object.
 
-    In case the deletion was done returned is affirmative response 201 CREATED.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the deletion was done, returns affirmative response 201 CREATED.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param log: specific log object
     :param path: path to log
@@ -89,8 +91,8 @@ def config_addition(title, form):
     """
     A function that checks correctness of the configuration file.
 
-    In case the file is correct returned is affirmative response 201 CREATED.
-    In case the file is incorrect returned is negative response 400 BAD_REQUEST.
+    In case the file is correct, returns affirmative response 201 CREATED.
+    In case the file is incorrect, returns negative response 400 BAD_REQUEST.
 
     :param title: file's title
     :param form: file's form
@@ -143,8 +145,8 @@ def activate(form, path):
     """
     A function that activates stored configuration files.
 
-    In case the activation was correct returned is affirmative response 201 OK.
-    In case it was incorrect returned is negative response 400 BAD_REQUEST.
+    In case the activation was correct, returns affirmative response 201 OK.
+    In case it was incorrect, returns negative response 400 BAD_REQUEST.
 
     :param form: file's form
     :param path: path to the file
@@ -256,7 +258,7 @@ def check_config():
     else:
 	copyfile(''.join([BCK_DIR, '.ippool.bck']), path)
         with open(path, 'a') as f:
-            f.write('\n\n{}'.format(CONF_WARNING))
+            f.write('\n\n{}'.format(CONF_WARN))
         print('ippool.conf has been created.........................OK')
     
     sh.chmod(mod, CONF_DIR)
@@ -292,10 +294,10 @@ def update_blacklist():
         with open(txt_file, 'r') as database:
 
             with open(conf_file, 'r') as ippool:
-                other_pools = ''.join(ippool.readlines()).split(CONF_WARNING)[0]
+                other_pools = ''.join(ippool.readlines()).split(CONF_WARN)[0]
 
             with open(conf_file, 'w') as ippool:
-                ippool.write(other_pools + CONF_WARNING + '\n\n' +
+                ippool.write(other_pools + CONF_WARN + '\n\n' +
                              'table role = ipf type = tree number = 1\n{\n')
                 for line in database.readlines()[15:]:
                     ippool.write(line.split()[0]+',\n')
@@ -320,7 +322,7 @@ def update_blacklist():
 
 def system_start():
     """
-    A function that checks an existence of directories and configuration files,
+    A function that checks an existence of directories and configuration files
     and updates IP blacklist as soon as service starts. Also set up a every
     update of IP blacklist.
     """

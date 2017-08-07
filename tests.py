@@ -1,5 +1,6 @@
 from django.test import TestCase
 from rest_framework import status
+
 from eszone_ipf.settings import BASE_DIR, API_VERSION_PREFIX
 
 
@@ -112,11 +113,13 @@ class ConfigFileTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_activate_ipnat_form(self):
-        response = self.client.get(''.join([self.url_act, 'test_ipnat.conf/']))
+        response = self.client.get(''.join([self.url_act, 
+        									'test_ipnat.conf/']))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_activate_ippool_form(self):
-        response = self.client.get(''.join([self.url_act, 'test_ippool.conf/']))
+        response = self.client.get(''.join([self.url_act, 
+        									'test_ippool.conf/']))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_activate_ipf6_form(self):
@@ -161,9 +164,11 @@ class OtherTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_allowed_command(self):
-        response = self.client.get(''.join([self.url, 'command/ipfstat -io/']))
+        response = self.client.get(''.join([self.url, 
+        									'command/ipfstat -io/']))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_not_allowed_command(self):
-        response = self.client.get(''.join([self.url, 'command/pkill python/']))
+        response = self.client.get(''.join([self.url, 
+											'command/pkill python/']))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

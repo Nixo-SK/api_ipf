@@ -1,8 +1,10 @@
 from os import remove
+
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from rest_framework.decorators import api_view
+
 from api_ipf.serializers import *
 from api_ipf.helpers import *
 
@@ -13,7 +15,7 @@ def config(request):
     """
     An API view function that processes with a not specified file.
 
-    In case of GET request returns list of all configuration files.
+    In case of GET request, returns list of all configuration files.
     In case of POST request takes data from request, serialize them, checks
     their correctness and stores them into a database.
 
@@ -51,11 +53,11 @@ def config_detail(request, title):
     """
     An API view function that processes request with a specified file.
 
-    In case of GET request returns configuration file's content.
+    In case of GET request, returns configuration file's content.
     In case of PUT request get itself form and data from request,
     serialize them, checks their correctness and stores them into a database.
-    In case of DELETE request delete configuration file from a disk and object
-    from a database.
+    In case of DELETE request delete configuration file from a disk and 
+    object from a database.
 
     :param request: client's request
     :param title: a unique configuration file's title
@@ -117,7 +119,7 @@ def log(request):
     """
     An API view function that processes with a not specified log.
 
-    In case of GET request returns list of all logs.
+    In case of GET request, returns list of all logs.
     In case of POST request takes data from request, serialize them, checks
     their validness and stores them into a database. Afterwards the function
     starts logging mechanism with a redirection of ipmon output to the log.
@@ -146,8 +148,9 @@ def log_detail(request, title):
     """
     An API view function that processes request with a specified log.
 
-    In case of GET request returns log's content.
-    In case of DELETE request delete log from a disk and object from a database.
+    In case of GET request, returns log's content.
+    In case of DELETE request deletes log from a disk 
+    and object from a database.
 
     :param request: client's request
     :param title: a unique log's title
@@ -189,8 +192,8 @@ def ipf(request, args):
     An API view function that takes arguments from request and tries execute
     them with an ipf command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: ipf arguments
@@ -210,8 +213,8 @@ def ipnat(request, args):
     An API view function that takes arguments from request and tries execute
     them with an ipnat command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: ipnat arguments
@@ -231,8 +234,8 @@ def ippool(request, args):
     An API view function that takes arguments from request and tries execute
     them with an ippool command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: ippool arguments
@@ -251,8 +254,8 @@ def ipfstat_base(request):
     """
     An API view function that tries execute ipfstat command without arguments.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :return: JSON response
@@ -276,8 +279,8 @@ def ipfstat(request, args):
     An API view function that takes arguments from request and tries execute
     them with an ipfstat command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: ipfstat arguments
@@ -297,8 +300,8 @@ def ipmon(request, args):
     An API view function that takes arguments from request and tries execute
     them with an ipmon command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: ipmon arguments
@@ -318,8 +321,8 @@ def svcadm(request, args):
     An API view function that takes argument from request and tries execute
     it with a svcadm command.
 
-    In case the execution was done returned is affirmative response 200 OK.
-    In case an error occurs returned is negative response 400 BAD_REQUEST.
+    In case the execution was done, returns affirmative response 200 OK.
+    In case an error occurs, returns negative response 400 BAD_REQUEST.
 
     :param request: client's request
     :param args: svcadm arguments

@@ -1,6 +1,9 @@
-from django.db import models
-from api_ipf.settings import CONF_DIR, LOG_DIR
 import sh
+
+from django.db import models
+
+from api_ipf.settings import CONF_DIR, LOG_DIR
+
 
 class ConfigFile(models.Model):
     """
